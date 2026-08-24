@@ -1,0 +1,30 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    # This IS the registry, so it doesn't register with itself or fetch a registry copy.
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    # Fine to leave enabled; harmless in a single-node dev registry. Called out here
+    # so it's not a mystery later if the dashboard shows an EMERGENCY! banner during
+    # a demo with only one or two clients registered.
+    enable-self-preservation: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

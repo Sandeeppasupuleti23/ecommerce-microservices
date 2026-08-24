@@ -1,0 +1,20 @@
+# Applied to every service that pulls config from this Config Server
+# (spring.config.import=optional:configserver:... on each service).
+# Service-specific files (order-service.yml, inventory-service.yml, etc.) get
+# added here as each service is built in later phases.
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
