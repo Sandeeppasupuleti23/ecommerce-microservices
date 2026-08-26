@@ -14,5 +14,4 @@ spring:
           # which is what both `mvn spring-boot:run` and `java -jar` use as the
           # working directory when launched from inside config-server/. See the
           # run commands below — always run from inside this folder.
-          search-locations: file:///${CONFIG_REPO_PATH:../config-repo}
-
+        search-locations: file:///C:/Users/DELL/Downloads/ecommerce-microservices/config-repo
