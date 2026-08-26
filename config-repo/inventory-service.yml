@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: inventory-service
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/inventory}
+
+inventory:
+  catalog:
+    enabled: true
