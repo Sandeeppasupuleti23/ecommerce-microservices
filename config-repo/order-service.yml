@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: order-service
+
+order:
+  events:
+    topic: order-events
