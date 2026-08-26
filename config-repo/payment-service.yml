@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: payment-service
+
+payment:
+  provider: mock
