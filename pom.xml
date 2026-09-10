@@ -21,6 +21,7 @@
     </properties>
 
     <modules>
+        <module>shared-contracts</module>
         <module>eureka-server</module>
         <module>config-server</module>
         <module>api-gateway</module>

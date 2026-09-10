@@ -4,14 +4,12 @@ server:
 spring:
   application:
     name: config-server
+
   profiles:
     active: native
+
   cloud:
     config:
       server:
         native:
-          # Resolved relative to this module's own base directory (config-server/),
-          # which is what both `mvn spring-boot:run` and `java -jar` use as the
-          # working directory when launched from inside config-server/. See the
-          # run commands below — always run from inside this folder.
-        search-locations: file:///C:/Users/DELL/Downloads/ecommerce-microservices/config-repo
+          search-locations: file:../config-repo

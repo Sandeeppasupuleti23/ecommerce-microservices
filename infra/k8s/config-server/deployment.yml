@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: config-server
+  namespace: ecommerce
 spec:
   replicas: 1
   selector:
@@ -13,11 +14,14 @@ spec:
         - name: config-server
           image: ecommerce/config-server:latest
           ports: [{ containerPort: 8888 }]
+          env:
+            - { name: CONFIG_REPO_LOCATION, value: file:/config-repo }
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: config-server
+  namespace: ecommerce
 spec:
   selector: { app: config-server }
   ports: [{ port: 8888, targetPort: 8888 }]

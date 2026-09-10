@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: inventory-service
+  namespace: ecommerce
 spec:
   replicas: 1
   selector:
@@ -13,11 +14,18 @@ spec:
         - name: inventory-service
           image: ecommerce/inventory-service:latest
           ports: [{ containerPort: 8082 }]
+          env:
+            - { name: SPRING_CONFIG_IMPORT, value: optional:configserver:http://config-server:8888 }
+            - { name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE, value: http://eureka-server:8761/eureka/ }
+            - { name: KAFKA_BOOTSTRAP_SERVERS, value: kafka:9092 }
+            - { name: MONGODB_URI, value: mongodb://mongo:27017/inventory }
+            - { name: JWT_JWK_SET_URI, valueFrom: { secretKeyRef: { name: ecommerce-runtime, key: JWT_JWK_SET_URI } } }
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: inventory-service
+  namespace: ecommerce
 spec:
   selector: { app: inventory-service }
   ports: [{ port: 8082, targetPort: 8082 }]

@@ -4,6 +4,9 @@ spring:
   data:
     mongodb:
       uri: ${MONGODB_URI:mongodb://localhost:27017/inventory}
+  kafka:
+    consumer:
+      group-id: inventory-saga
 
 inventory:
   catalog:

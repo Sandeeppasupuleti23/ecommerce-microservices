@@ -20,3 +20,5 @@ mvnw.cmd clean verify
 
 Start local infrastructure with `docker compose -f infra/docker-compose.yml up -d`.
 Run the foundation services first, then the business services from their module directories.
+
+The order API starts a Saga with `POST /api/orders` and a JSON body such as `{"total": 49.99}`. Configure `JWT_JWK_SET_URI` when using a real identity provider. For Kubernetes, apply `infra/k8s/infrastructure.yml` first, then the application manifests.

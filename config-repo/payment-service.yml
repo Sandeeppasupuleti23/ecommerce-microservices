@@ -1,6 +1,17 @@
 spring:
   application:
     name: payment-service
+  datasource:
+    url: ${PAYMENT_DB_URL:jdbc:postgresql://localhost:5433/payments}
+    username: ${PAYMENT_DB_USERNAME:ecommerce}
+    password: ${PAYMENT_DB_PASSWORD:ecommerce}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  kafka:
+    consumer:
+      group-id: payment-saga
 
 payment:
   provider: mock

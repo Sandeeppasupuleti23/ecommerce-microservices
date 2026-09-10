@@ -1,6 +1,17 @@
 spring:
   application:
     name: order-service
+  datasource:
+    url: ${ORDER_DB_URL:jdbc:postgresql://localhost:5432/orders}
+    username: ${ORDER_DB_USERNAME:ecommerce}
+    password: ${ORDER_DB_PASSWORD:ecommerce}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  kafka:
+    consumer:
+      group-id: order-saga
 
 order:
   events:

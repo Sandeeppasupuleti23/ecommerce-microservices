@@ -2,8 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: payment-service
+  namespace: ecommerce
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels: { app: payment-service }
   template:
@@ -13,11 +14,31 @@ spec:
         - name: payment-service
           image: ecommerce/payment-service:latest
           ports: [{ containerPort: 8083 }]
+          resources:
+            requests: { cpu: 250m, memory: 512Mi }
+            limits: { cpu: "1", memory: 1Gi }
+          readinessProbe:
+            httpGet: { path: /actuator/health/readiness, port: 8083 }
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /actuator/health/liveness, port: 8083 }
+            initialDelaySeconds: 40
+            periodSeconds: 20
+          env:
+            - { name: SPRING_CONFIG_IMPORT, value: optional:configserver:http://config-server:8888 }
+            - { name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE, value: http://eureka-server:8761/eureka/ }
+            - { name: KAFKA_BOOTSTRAP_SERVERS, value: kafka:9092 }
+            - { name: PAYMENT_DB_URL, value: jdbc:postgresql://postgres:5432/payments }
+            - { name: PAYMENT_DB_USERNAME, valueFrom: { secretKeyRef: { name: ecommerce-runtime, key: PAYMENT_DB_USERNAME } } }
+            - { name: PAYMENT_DB_PASSWORD, valueFrom: { secretKeyRef: { name: ecommerce-runtime, key: PAYMENT_DB_PASSWORD } } }
+            - { name: JWT_JWK_SET_URI, valueFrom: { secretKeyRef: { name: ecommerce-runtime, key: JWT_JWK_SET_URI } } }
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: payment-service
+  namespace: ecommerce
 spec:
   selector: { app: payment-service }
   ports: [{ port: 8083, targetPort: 8083 }]

@@ -11,6 +11,8 @@ management:
   endpoint:
     health:
       show-details: always
+      probes:
+        enabled: true
 
 eureka:
   client:
@@ -18,3 +20,39 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.ecommerce.contracts
+    listener:
+      ack-mode: record
+      missing-topics-fatal: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${JWT_ISSUER_URI:http://localhost:8089/realms/ecommerce}
+          jwk-set-uri: ${JWT_JWK_SET_URI:http://localhost:8089/realms/ecommerce/protocol/openid-connect/certs}
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      paymentProcessor:
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+  retry:
+    instances:
+      paymentProcessor:
+        max-attempts: 3
+        wait-duration: 500ms

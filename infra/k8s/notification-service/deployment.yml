@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: notification-service
+  namespace: ecommerce
 spec:
   replicas: 1
   selector:
@@ -13,11 +14,20 @@ spec:
         - name: notification-service
           image: ecommerce/notification-service:latest
           ports: [{ containerPort: 8084 }]
+          env:
+            - { name: SPRING_CONFIG_IMPORT, value: optional:configserver:http://config-server:8888 }
+            - { name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE, value: http://eureka-server:8761/eureka/ }
+            - { name: KAFKA_BOOTSTRAP_SERVERS, value: kafka:9092 }
+            - { name: NOTIFICATION_DB_URL, value: jdbc:postgresql://postgres:5432/notifications }
+            - { name: NOTIFICATION_DB_USERNAME, valueFrom: { secretKeyRef: { name: ecommerce-runtime, key: NOTIFICATION_DB_USERNAME } } }
+            - { name: NOTIFICATION_DB_PASSWORD, valueFrom: { secretKeyRef: { name: ecommerce-runtime, key: NOTIFICATION_DB_PASSWORD } } }
+            - { name: JWT_JWK_SET_URI, valueFrom: { secretKeyRef: { name: ecommerce-runtime, key: JWT_JWK_SET_URI } } }
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: notification-service
+  namespace: ecommerce
 spec:
   selector: { app: notification-service }
   ports: [{ port: 8084, targetPort: 8084 }]

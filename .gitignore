@@ -36,3 +36,10 @@ secrets.properties
 
 # Spring Boot generated files
 spring.log
+# Eclipse IDE files
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/

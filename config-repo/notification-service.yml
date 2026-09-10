@@ -1,6 +1,17 @@
 spring:
   application:
     name: notification-service
+  datasource:
+    url: ${NOTIFICATION_DB_URL:jdbc:postgresql://localhost:5434/notifications}
+    username: ${NOTIFICATION_DB_USERNAME:ecommerce}
+    password: ${NOTIFICATION_DB_PASSWORD:ecommerce}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  kafka:
+    consumer:
+      group-id: notification-saga
 
 notification:
   provider: mock
