@@ -31,7 +31,7 @@ public class OrderController {
     }
 
     @org.springframework.web.bind.annotation.GetMapping("/{orderId}")
-    public OrderAggregate getOrder(@org.springframework.web.bind.annotation.PathVariable UUID orderId) {
+    public OrderAggregate getOrder(@org.springframework.web.bind.annotation.PathVariable("orderId") UUID orderId) {
         return saga.replay(orderId);
     }
 }

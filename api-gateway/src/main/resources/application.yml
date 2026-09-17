@@ -8,13 +8,6 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8089/realms/ecommerce
-          jwk-set-uri: http://localhost:8089/realms/ecommerce/protocol/openid-connect/certs
-
   cloud:
     gateway:
       discovery:
@@ -60,3 +53,10 @@ management:
   endpoint:
     health:
       show-details: always
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:my-super-secret-ecommerce-jwt-key-2026-very-long}
+    username: ${JWT_USERNAME:ecommerce-user}
+    password: ${JWT_PASSWORD:ecommerce-password}
+

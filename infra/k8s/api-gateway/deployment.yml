@@ -17,7 +17,9 @@ spec:
           env:
             - { name: SPRING_CONFIG_IMPORT, value: optional:configserver:http://config-server:8888 }
             - { name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE, value: http://eureka-server:8761/eureka/ }
-            - { name: JWT_JWK_SET_URI, valueFrom: { secretKeyRef: { name: ecommerce-runtime, key: JWT_JWK_SET_URI } } }
+            - { name: JWT_SECRET, valueFrom: { secretKeyRef: { name: ecommerce-runtime, key: JWT_SECRET } } }
+            - { name: JWT_USERNAME, valueFrom: { secretKeyRef: { name: ecommerce-runtime, key: JWT_USERNAME } } }
+            - { name: JWT_PASSWORD, valueFrom: { secretKeyRef: { name: ecommerce-runtime, key: JWT_PASSWORD } } }
 ---
 apiVersion: v1
 kind: Service

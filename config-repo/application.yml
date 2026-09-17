@@ -37,12 +37,6 @@ spring:
     listener:
       ack-mode: record
       missing-topics-fatal: false
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${JWT_ISSUER_URI:http://localhost:8089/realms/ecommerce}
-          jwk-set-uri: ${JWT_JWK_SET_URI:http://localhost:8089/realms/ecommerce/protocol/openid-connect/certs}
 
 resilience4j:
   circuitbreaker:
@@ -56,3 +50,9 @@ resilience4j:
       paymentProcessor:
         max-attempts: 3
         wait-duration: 500ms
+app:
+  jwt:
+    secret: ${JWT_SECRET:my-super-secret-ecommerce-jwt-key-2026-very-long}
+    username: ${JWT_USERNAME:ecommerce-user}
+    password: ${JWT_PASSWORD:Ecommerce@2526}
+
