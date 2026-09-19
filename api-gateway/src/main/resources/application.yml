@@ -1,4 +1,4 @@
-server:
+﻿server:
   port: 8080
 
 spring:
@@ -56,7 +56,8 @@ management:
 
 app:
   jwt:
-    secret: ${JWT_SECRET:my-super-secret-ecommerce-jwt-key-2026-very-long}
-    username: ${JWT_USERNAME:ecommerce-user}
-    password: ${JWT_PASSWORD:ecommerce-password}
+    secret: ${JWT_SECRET}
+    username: ${JWT_USERNAME}
+    password: ${JWT_PASSWORD}
+
 

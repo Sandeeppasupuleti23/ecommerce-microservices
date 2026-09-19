@@ -1,4 +1,4 @@
-# Applied to every service that pulls config from this Config Server
+﻿# Applied to every service that pulls config from this Config Server
 # (spring.config.import=optional:configserver:... on each service).
 # Service-specific files (order-service.yml, inventory-service.yml, etc.) get
 # added here as each service is built in later phases.
@@ -52,7 +52,8 @@ resilience4j:
         wait-duration: 500ms
 app:
   jwt:
-    secret: ${JWT_SECRET:my-super-secret-ecommerce-jwt-key-2026-very-long}
-    username: ${JWT_USERNAME:ecommerce-user}
-    password: ${JWT_PASSWORD:Ecommerce@2526}
+    secret: ${JWT_SECRET}
+    username: ${JWT_USERNAME}
+    password: ${JWT_PASSWORD}
+
 
